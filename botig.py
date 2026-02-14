@@ -64,7 +64,7 @@ async def ship(ctx, member1: discord.Member, member2 : discord.Member ):
 @bot.listen()
 async def on_message(message):
      msg_content = message.content.lower()
-     bignono = ['pau','dick','penis']
+     bignono = ['badmessage','badmessage','badmessage']
      if any(word in msg_content for word in bignono):
           await message.delete()
      
@@ -73,3 +73,4 @@ async def on_message(message):
 
 
 bot.run(token)
+
