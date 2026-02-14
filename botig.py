@@ -22,7 +22,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-        channel=bot.get_channel(1470106625615462685)
+        channel=bot.get_channel('channel id here')
         to_send = f'Welcome {member.mention}!'
         await channel.send(to_send)
 
@@ -68,6 +68,7 @@ async def on_message(message):
      if any(word in msg_content for word in bignono):
           await message.delete()
      
+
 
 
 
