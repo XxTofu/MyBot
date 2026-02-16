@@ -22,9 +22,11 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-        channel=bot.get_channel('channel id here')
+        channel=bot.get_channel(channel id) #channel id where bot send the message
+        role = member.guild.get_role(role id) #role id the member gets when enters the sv
         to_send = f'Welcome {member.mention}!'
         await channel.send(to_send)
+        await member.add_roles(role)
 
 
 @bot.command()
@@ -77,5 +79,6 @@ async def on_message(message):
 
 
 bot.run(token)
+
 
 
