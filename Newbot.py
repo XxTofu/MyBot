@@ -51,9 +51,13 @@ async def nuke(ctx, times:int, content='repeat', limit = 21):
 
 @bot.command()
 async def clear(ctx, times:int):
-     for i in range(times):
+     role = ctx.guild.get_role('id role here')
+     if role in ctx.author.roles:
+        for i in range(times):
           await ctx.channel.purge(limit = times +1)
           break
+    else:
+        await ctx.send('Can`t do it')
 
 @bot.command()
 async def ship(ctx, member1: discord.Member, member2 : discord.Member ):
@@ -73,4 +77,5 @@ async def on_message(message):
 
 
 bot.run(token)
+
 
