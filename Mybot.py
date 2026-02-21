@@ -37,10 +37,10 @@ async def git(ctx):
 
 
 @bot.command()#show the time? Not relevant code user can look at the time without this
-async def time(message):
+async def time(ctx):
     time=datetime.now()
     d = time + timedelta(days=0)
-    await message.send(discord.utils.format_dt(d))
+    await ctx.send(discord.utils.format_dt(d))
 
 
 @bot.command()#tell when a member joined the server
@@ -96,3 +96,4 @@ async def on_message_delete(message):
 
 
 bot.run(token)
+
