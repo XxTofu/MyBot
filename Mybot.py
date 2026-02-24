@@ -72,9 +72,15 @@ async def clear(ctx, times:int):
         await ctx.send('Sorry can`t do')
 
 
-@bot.command() #simple ship command, doesnt have any image 
+@bot.command()
 async def ship(ctx, member1: discord.Member, member2 : discord.Member ):
-    percent = random.randint(1, 100)    
+    percent = random.randint(1, 100)
+    name1 = str(member1)
+    name2 = str(member2)
+    name1 = name1.capitalize()
+    name2 = name2.capitalize()
+    shipname = name1[:3] + name2[:3]
+    await ctx.send(f'Ship Name: {shipname}')
     await ctx.send(f'{member1} has a {percent}% compatibility with {member2}')
 
 
@@ -96,4 +102,5 @@ async def on_message_delete(message):
 
 
 bot.run(token)
+
 
