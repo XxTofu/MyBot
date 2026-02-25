@@ -73,13 +73,21 @@ async def clear(ctx, times:int):
 
 
 @bot.command()
-async def ship(ctx, member1: discord.Member, member2 : discord.Member ):
+async def ship(ctx, member1: discord.Member, member2 : discord.Member):
     percent = random.randint(1, 100)
-    name1 = str(member1)
-    name2 = str(member2)
+    name1 = str(member1.display_name)
+    name2 = str(member2.display_name)
+    if len(name1) >= 3 and len(name2) >= 3:
+        shipname = name1[:2] + name2[-2:]
+    elif len(name1) >= 3 and len(name2) <3:
+        shipname = name1[:2] + name2[-1:]
+    elif len(name1) < 3 and len(name2) >=3:
+        shipname = name1[:1] + name2[-2:]
+    else:
+        shipname = name1[:1] + name2[-1:]
+    
     name1 = name1.capitalize()
-    name2 = name2.capitalize()
-    shipname = name1[:3] + name2[:3]
+    name2 = name2.capitalize()    
     await ctx.send(f'Ship Name: {shipname}')
     await ctx.send(f'{member1} has a {percent}% compatibility with {member2}')
 
@@ -102,5 +110,6 @@ async def on_message_delete(message):
 
 
 bot.run(token)
+
 
 
