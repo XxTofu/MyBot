@@ -10,8 +10,7 @@ token = input('Token: ')
 intents= discord.Intents.default()
 intents.members = True
 intents.message_content = True
-
-bot = commands.Bot(command_prefix='/',description=description,intents=intents)
+bot = commands.Bot(command_prefix='!',description=description,intents=intents, help_command=None)
 
 
 @bot.event
@@ -21,14 +20,13 @@ async def on_ready():
     print('----------')
 
 
-@bot.event#welcome message to the server
+@bot.event#welcome message to the server and give a role to the new member
 async def on_member_join(member):
-        channel=bot.get_channel(channel id here)
-        role = member.guild.get_role(channel id here)
-        to_send = f'Welcome {member.mention} to the server hope you enjoy!'
+        channel=bot.get_channel('channel id')
+        role = member.guild.get_role('role id')
+        to_send = f'Welcome {member.mention} to Rays`s restaurant hope you enjoy!'
         await channel.send(to_send)
         await member.add_roles(role)
-
 
 
 @bot.command()
@@ -62,8 +60,8 @@ async def nuke(ctx, times:int, content='repeat', limit = 21):
 
 @bot.command()#clear the number of messages the user as asked on the channel
 async def clear(ctx, times:int):
-    role = ctx.guild.get_role(role id here)
-    role1 = ctx.guild.get_role(other role id here)
+    role = ctx.guild.get_role('role id')
+    role1 = ctx.guild.get_role('role id')
     if role or role1 in ctx.author.roles:
         for i in range(times):
             await ctx.channel.purge(limit = times +1)
@@ -72,44 +70,64 @@ async def clear(ctx, times:int):
         await ctx.send('Sorry can`t do')
 
 
-@bot.command()
+@bot.command()#ban a user
+async def ban(ctx, member:discord.Member, reason=None):
+    role = ctx.guild.get_role('role id')
+    role1 = ctx.guild.get_role('role id')
+    if role or role1 in ctx.author.roles:
+        await member.ban(reason=reason)
+
+
+@bot.command()#kick a user
+async def kick(ctx, member:discord.Member, reason = None):
+    role = ctx.guild.get_role('role id')
+    role1 = ctx.guild.get_role('role id')
+    if role or role1 in ctx.author.roles:
+        await member.kick(reason=reason)
+        await ctx.send(f'{member} was kicked by {ctx.author}: {reason}')
+        
+
+@bot.command()#simple ship command, doesnt have any image 
 async def ship(ctx, member1: discord.Member, member2 : discord.Member):
     percent = random.randint(1, 100)
     name1 = str(member1.display_name)
     name2 = str(member2.display_name)
+    name1 = name1.capitalize()
+    name2 = name2.capitalize()  
     if len(name1) >= 3 and len(name2) >= 3:
-        shipname = name1[:2] + name2[-2:]
-    elif len(name1) >= 3 and len(name2) <3:
-        shipname = name1[:2] + name2[-1:]
-    elif len(name1) < 3 and len(name2) >=3:
-        shipname = name1[:1] + name2[-2:]
+        shipname = name1[:3] + name2[-2:]
+    elif len(name1) >= 3 and len(name2) < 3:
+        shipname = name1[:3] + name2[-1:]
+    elif len(name1) < 3 and len(name2) >= 3:
+        shipname = name1[:1] + name2[-2:] 
     else:
         shipname = name1[:1] + name2[-1:]
-    
-    name1 = name1.capitalize()
-    name2 = name2.capitalize()    
+     
     await ctx.send(f'Ship Name: {shipname}')
     await ctx.send(f'{member1} has a {percent}% compatibility with {member2}')
 
 
+@bot.command()#send the users icon to the channel
+async def rob(ctx, member: discord.Member):
+    if member.display_avatar == member.default_avatar:
+        await ctx.send(f'Default Discord avatar...')
+    else:
+        await ctx.send(f'Here is the icon: {member.display_avatar}')
+    
+
 @bot.listen()#block the words you want
 async def on_message(message):
      msg_content = message.content.lower()
-     bignono = [list of bad words]
+     bignono = ['list of blocked words']
      if any(word in msg_content for word in bignono):
           await message.delete()
 
 
-
-
-@bot.event #it will send every single message a user has deleted to the channel you choose
+@bot.event#it will send every single message a user has deleted to the channel you choose
 async def on_message_delete(message):
-    channel=bot.get_channel(channel id here)
+    channel=bot.get_channel('channel id')
     ctx = f'{message.author} has deleted {message.content}'
     await  channel.send(ctx)
 
 
 bot.run(token)
-
-
-
