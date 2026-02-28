@@ -72,16 +72,16 @@ async def clear(ctx, times:int):
 
 @bot.command()#ban a user
 async def ban(ctx, member:discord.Member, reason=None):
-    role = ctx.guild.get_role('role id')
-    role1 = ctx.guild.get_role('role id')
+    role = member.guild.get_role('role id')
+    role1 = member.guild.get_role('role id')
     if role or role1 in ctx.author.roles:
         await member.ban(reason=reason)
 
 
 @bot.command()#kick a user
 async def kick(ctx, member:discord.Member, reason = None):
-    role = ctx.guild.get_role('role id')
-    role1 = ctx.guild.get_role('role id')
+    role = member.guild.get_role('role id')
+    role1 = member.guild.get_role('role id')
     if role or role1 in ctx.author.roles:
         await member.kick(reason=reason)
         await ctx.send(f'{member} was kicked by {ctx.author}: {reason}')
@@ -131,3 +131,4 @@ async def on_message_delete(message):
 
 
 bot.run(token)
+
